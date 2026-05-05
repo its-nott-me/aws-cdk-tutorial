@@ -1,10 +1,12 @@
 import { DynamoDBClient, PutItemCommand } from "@aws-sdk/client-dynamodb";
-import { marshall } from "@aws-sdk/util-dynamodb";
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
 import { v4 } from "uuid";
+import { DynamoDBDocumentClient, PutCommand } from "@aws-sdk/lib-dynamodb";
 
 
-export async function postSpaces(event: APIGatewayProxyEvent, ddbClient: DynamoDBClient): Promise<APIGatewayProxyResult> {  
+export async function postSpacesWithDoc(event: APIGatewayProxyEvent, ddbClient: DynamoDBClient): Promise<APIGatewayProxyResult> {  
+  const ddbDocClient = DynamoDBDocumentClient.from(ddbClient);
+
   const tableName = process.env.TABLE_NAME;
   
   if(!tableName){
@@ -17,13 +19,17 @@ export async function postSpaces(event: APIGatewayProxyEvent, ddbClient: DynamoD
       body: JSON.stringify("Request body is required")
     }
   }
+
+  let body = JSON.parse(event.body || '{}');
   
-  const item = JSON.parse(event.body || '{}');
-  const randomId = v4();
+  const item = {
+    id: v4(),
+    ...body,
+  }
   
-  const result = await ddbClient.send(new PutItemCommand({
+  const result = await ddbDocClient.send(new PutCommand({
     TableName: tableName,
-    Item: marshall(item),
+    Item: item,
     ReturnValues: "ALL_OLD"
   }));
 
@@ -31,6 +37,6 @@ export async function postSpaces(event: APIGatewayProxyEvent, ddbClient: DynamoD
 
   return {
     statusCode: 201,
-    body: JSON.stringify({id: randomId})
+    body: JSON.stringify({id: item.id})
   }
 }
