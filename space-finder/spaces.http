@@ -1,1 +1,12 @@
-GET https://wvapxv7gpk.execute-api.ap-south-2.amazonaws.com/prod/spaces
+GET https://w9p3beofs3.execute-api.ap-south-2.amazonaws.com/prod/spaces
+
+###
+
+POST https://w9p3beofs3.execute-api.ap-south-2.amazonaws.com/prod/spaces
+Content-Type: application/json
+
+  {
+    "location": "Paris"
+  }
+
+###
