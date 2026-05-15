@@ -10,3 +10,13 @@ Content-Type: application/json
   }
 
 ###
+PUT https://w9p3beofs3.execute-api.ap-south-2.amazonaws.com/prod/spaces?id=db7dbeee-0167-4040-99d7-186939769c07
+Content-Type: application/json
+
+  {
+    "location": "Queensland"
+  }
+
+###
+
+DELETE https://w9p3beofs3.execute-api.ap-south-2.amazonaws.com/prod/spaces?id=13d34e19-4f1f-4bdb-9a2a-8365ef1da07c

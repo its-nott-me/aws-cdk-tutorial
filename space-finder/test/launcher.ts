@@ -19,9 +19,11 @@ process.env.AWS_REGION='ap-south-2';
 handler({
   httpMethod: 'GET',
   // queryStringParameters: {
-  //   id: 'db7dbeee-0167-4040-99d7-186939769c07'
-  // }
+  //   id: 'a022dada-b998-4e07-9991-3ee676dca7f9'
+  // },
   // body: JSON.stringify({
-  //   location: 'Queensland'
+  //   location: 'Queensland-2'
   // })
-} as any, {} as any)
+} as any, {} as any).then(res => {
+  console.log(res)
+})

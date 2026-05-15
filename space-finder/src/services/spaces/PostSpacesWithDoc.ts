@@ -1,7 +1,7 @@
 import { DynamoDBClient, PutItemCommand } from "@aws-sdk/client-dynamodb";
 import { APIGatewayProxyEvent, APIGatewayProxyResult } from "aws-lambda";
-import { v4 } from "uuid";
 import { DynamoDBDocumentClient, PutCommand } from "@aws-sdk/lib-dynamodb";
+import { createRandomId } from "../shared/Utils";
 
 
 export async function postSpacesWithDoc(event: APIGatewayProxyEvent, ddbClient: DynamoDBClient): Promise<APIGatewayProxyResult> {  
@@ -23,7 +23,7 @@ export async function postSpacesWithDoc(event: APIGatewayProxyEvent, ddbClient: 
   let body = JSON.parse(event.body || '{}');
   
   const item = {
-    id: v4(),
+    id: createRandomId(),
     ...body,
   }
   
